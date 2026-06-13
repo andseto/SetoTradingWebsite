@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #d49a45; --accent-soft: #e6b15f; --accent-rgb: 212,154,69; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #100d0b; }
+  *, *::before, *::after { box-sizing: border-box; }
+  ::selection { background: var(--accent); color: #100d0b; }
+</style>
+</helmet>
+
+<dc-import name="SiteBG" style="position:fixed; inset:0; z-index:0; pointer-events:none;" hint-size="100%,100%"></dc-import>
+
+<div style="position:relative; z-index:1; font-family:'Hanken Grotesk',sans-serif; color:#f2ece4; overflow-x:clip;">
+
+  <dc-import name="SiteNav" home="SetoTrading.dc.html" active="mentoring" handle="{{ handle }}" hint-size="100%,68px"></dc-import>
+
+  <!-- HEADER -->
+  <header style="position:relative; padding:clamp(60px,12vh,130px) clamp(20px,5vw,56px) clamp(30px,5vh,56px);">
+    <div style="max-width:1100px; margin:0 auto;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">1:1 Mentoring</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(40px,7vw,86px); line-height:0.98; letter-spacing:-0.025em; margin:0 0 24px; max-width:16ch;">Wherever you are,<br>we start there.</h1>
+      <p style="font-size:clamp(16px,2vw,20px); line-height:1.6; color:#c4bbb1; max-width:54ch; margin:0;">Mentoring is one-on-one and built around you — not a generic course. It's open to <span style="color:#f2ece4;">unprofitable, beginner, and intermediate traders</span> who are serious about learning the LPO model the right way.</p>
+    </div>
+  </header>
+
+  <!-- AUDIENCE + INCLUDED -->
+  <section style="position:relative; padding:clamp(20px,4vh,40px) clamp(20px,5vw,56px) clamp(60px,9vh,100px); background:linear-gradient(180deg, rgba(13,11,9,0) 0%, rgba(13,11,9,0.9) 10%, rgba(13,11,9,0.92) 100%);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="position:relative; margin-bottom:48px;" onMouseEnter="{{ stopAuto }}" onMouseLeave="{{ startAuto }}">
+        <div style="overflow:hidden; border-radius:18px; border:1px solid rgba(242,236,228,0.1);">
+          <div style="display:flex; transition:transform 0.65s cubic-bezier(0.22,0.61,0.36,1); transform:{{ trackTransform }};">
+            <sc-for list="{{ audiences }}" as="a" hint-placeholder-count="3">
+              <div style="flex:0 0 100%; min-width:0; min-height:288px; background:rgba(24,20,18,0.55); padding:clamp(40px,6vw,64px) clamp(28px,9vw,120px); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:18px;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; padding:7px 16px; border-radius:999px; border:1px solid rgba(var(--accent-rgb),0.4); color:var(--accent);">{{ a.tag }}</span>
+                <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(26px,4vw,40px); margin:0; line-height:1.08;">{{ a.title }}</h3>
+                <p style="font-size:clamp(15px,1.8vw,18px); line-height:1.6; color:#b3aaa1; margin:0; max-width:52ch;">{{ a.body }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute; top:50%; left:14px; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid rgba(242,236,228,0.18); background:rgba(16,13,11,0.72); backdrop-filter:blur(6px); color:#f2ece4; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="border-color:var(--accent); color:var(--accent);">‹</button>
+        <button onClick="{{ next }}" aria-label="Next" style="position:absolute; top:50%; right:14px; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:1px solid rgba(242,236,228,0.18); background:rgba(16,13,11,0.72); backdrop-filter:blur(6px); color:#f2ece4; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="border-color:var(--accent); color:var(--accent);">›</button>
+        <div style="display:flex; gap:8px; justify-content:center; margin-top:22px;">
+          <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="3">
+            <button onClick="{{ dot.on }}" aria-label="Go to slide" style="height:9px; border-radius:999px; border:none; cursor:pointer; transition:all 0.3s ease; {{ dot.style }}"></button>
+          </sc-for>
+        </div>
+      </div>
+
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(24px,3.4vw,38px); line-height:1.04; letter-spacing:-0.02em; margin:0 0 24px;">Some of what's included</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; margin-bottom:32px;">
+        <sc-for list="{{ included }}" as="i" hint-placeholder-count="4">
+          <div style="background:rgba(24,20,18,0.5); padding:26px 24px; display:flex; flex-direction:column; gap:10px;">
+            <span style="width:9px; height:9px; border-radius:50%; background:var(--accent);"></span>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px;">{{ i.t }}</div>
+            <div style="font-size:14px; line-height:1.55; color:#a89f96;">{{ i.b }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- CTA -->
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; border:1px solid rgba(var(--accent-rgb),0.35); border-radius:16px; background:linear-gradient(120deg, rgba(var(--accent-rgb),0.1), rgba(24,20,18,0.4)); padding:32px clamp(24px,4vw,44px);">
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(22px,2.6vw,30px); margin-bottom:8px;">1:1 mentoring is open now.</div>
+          <div style="font-size:15.5px; color:#a89f96; max-width:46ch;">Live screen-shares, trade reviews, and direct feedback. Apply today and I'll reach out to get you started.</div>
+        </div>
+        <a href="Apply.dc.html" style="display:inline-flex; align-items:center; gap:9px; padding:15px 30px; border-radius:999px; background:var(--accent); color:#100d0b; font-weight:600; font-size:15.5px; text-decoration:none; white-space:nowrap; box-shadow:0 14px 40px -14px rgba(var(--accent-rgb),0.8);" style-hover="background:var(--accent-soft);">Apply for mentoring</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" handle="{{ handle }}" estYear="{{ estYear }}" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;handle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;@SetoTrading&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;estYear&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2023&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;amber&quot;,&quot;options&quot;:[&quot;amber&quot;,&quot;azure&quot;,&quot;violet&quot;,&quot;copper&quot;,&quot;slate&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  ACCENTS = {
+    amber:  { hex:'#d49a45', soft:'#e6b15f', rgb:[212,154,69] },
+    azure:  { hex:'#4f86f7', soft:'#74a0fa', rgb:[79,134,247] },
+    violet: { hex:'#9a7cf2', soft:'#b29bf6', rgb:[154,124,242] },
+    copper: { hex:'#c9763e', soft:'#dc9059', rgb:[201,118,62] },
+    slate:  { hex:'#8fb3c9', soft:'#abc6d8', rgb:[143,179,201] }
+  };
+  accent() { return this.ACCENTS[this.props.accent] || this.ACCENTS.amber; }
+  applyAccent() {
+    const A = this.accent();
+    const r = document.documentElement;
+    r.style.setProperty('--accent', A.hex);
+    r.style.setProperty('--accent-soft', A.soft);
+    r.style.setProperty('--accent-rgb', A.rgb.join(','));
+  }
+  state = { idx: 0 };
+  startAuto() { this.stopAuto(); this._t = setInterval(() => this.setState(s => ({ idx: (s.idx + 1) % 3 })), 4500); }
+  stopAuto() { if (this._t) { clearInterval(this._t); this._t = null; } }
+  go(i) { this.setState({ idx: i }); this.startAuto(); }
+  next() { this.setState(s => ({ idx: (s.idx + 1) % 3 })); this.startAuto(); }
+  prev() { this.setState(s => ({ idx: (s.idx + 2) % 3 })); this.startAuto(); }
+  componentDidMount() { this.applyAccent(); this.startAuto(); }
+  componentWillUnmount() { this.stopAuto(); }
+  componentDidUpdate(prev) { if (prev.accent !== this.props.accent) this.applyAccent(); }
+
+  renderVals() {
+    const idx = this.state.idx;
+    const audiences = [
+      { tag:'Unprofitable', title:'Stuck in the red', body:'You\u2019ve been trading a while but can\u2019t string together green months. We\u2019ll find the leaks and rebuild around a process you actually trust.' },
+      { tag:'Beginner', title:'Brand new', body:'Never placed a trade, or just starting out. We start from zero \u2014 charts, structure, and the LPO model, one step at a time.' },
+      { tag:'Intermediate', title:'Ready to sharpen', body:'You know the basics and want an edge. We tighten your reads, your risk, and your discipline into a repeatable system.' }
+    ];
+    return {
+      handle: this.props.handle ?? '@SetoTrading',
+      estYear: this.props.estYear ?? '2023',
+      audiences,
+      trackTransform: 'translateX(-' + (idx * 100) + '%)',
+      prev: () => this.prev(),
+      next: () => this.next(),
+      startAuto: () => this.startAuto(),
+      stopAuto: () => this.stopAuto(),
+      dots: audiences.map((a, i) => ({ on: () => this.go(i), style: i === idx ? 'width:28px; background:var(--accent);' : 'width:9px; background:rgba(242,236,228,0.25);' })),
+      included: [
+        { t:'The full LPO framework', b:'Bias, fair value gaps, OTE, SMT and risk \u2014 taught in the exact order they matter, not as random tips. You\u2019ll learn why each confluence exists so you can read any chart instead of memorizing setups.' },
+        { t:'Trade reviews', b:'We go through your real trades together \u2014 the winners, the losers, and the ones you talked yourself out of. Naming your specific leaks out loud is the fastest way to stop repeating them.' },
+        { t:'Direct 1:1 contact via Discord & SMS', b:'Reach me directly between sessions on Discord or by text. Send a chart, ask a question, get a real answer \u2014 you\u2019re never left guessing on a live setup.' },
+        { t:'A trading structure & forced discipline', b:'A clear routine and a firm set of rules built around your schedule, so emotion stops driving your decisions. Structure is what turns a good model into consistent results.' },
+        { t:'Direct feedback', b:'Honest, specific critique on your reads, your risk, and your mindset \u2014 I\u2019ll tell you what\u2019s actually holding you back, not what you want to hear.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

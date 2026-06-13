@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #d49a45; --accent-soft: #e6b15f; --accent-rgb: 212,154,69; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #100d0b; }
+  *, *::before, *::after { box-sizing: border-box; }
+  ::selection { background: var(--accent); color: #100d0b; }
+  input::placeholder, textarea::placeholder { color: #6b625a; }
+  select { -webkit-appearance: none; appearance: none; }
+  select option { background: #181412; color: #f2ece4; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent) !important; }
+</style>
+</helmet>
+
+<dc-import name="SiteBG" style="position:fixed; inset:0; z-index:0; pointer-events:none;" hint-size="100%,100%"></dc-import>
+
+<div style="position:relative; z-index:1; font-family:'Hanken Grotesk',sans-serif; color:#f2ece4; overflow-x:clip;">
+
+  <dc-import name="SiteNav" home="SetoTrading.dc.html" active="mentoring" handle="{{ handle }}" hint-size="100%,68px"></dc-import>
+
+  <!-- ===================== THANK YOU ===================== -->
+  <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+    <section style="position:relative; min-height:78vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:clamp(60px,12vh,140px) clamp(20px,5vw,56px);">
+      <div style="max-width:620px;">
+        <div style="width:64px; height:64px; border-radius:50%; margin:0 auto 30px; border:1px solid rgba(var(--accent-rgb),0.5); display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:30px;">✓</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent); margin-bottom:20px;">Application received</div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(34px,5.5vw,60px); line-height:1.02; letter-spacing:-0.025em; margin:0 0 20px;">Thanks, {{ firstName }}. Your application's in.</h1>
+        <p style="font-size:clamp(16px,1.8vw,18.5px); line-height:1.6; color:#c4bbb1; margin:0 0 36px;">I read every application personally and I'll reach out using the contact details you provided to set up your first session. In the meantime, watch LPO play out daily on Instagram.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+          <a href="SetoTrading.dc.html" style="display:inline-flex; align-items:center; gap:9px; padding:15px 32px; border-radius:999px; background:var(--accent); color:#100d0b; font-weight:600; font-size:15.5px; text-decoration:none;" style-hover="background:var(--accent-soft);">Back to home</a>
+          <a href="Lessons.dc.html" style="display:inline-flex; align-items:center; gap:9px; padding:15px 30px; border-radius:999px; border:1px solid rgba(242,236,228,0.18); color:#e8e1d8; font-weight:500; font-size:15px; text-decoration:none;" style-hover="border-color:rgba(242,236,228,0.45);">Explore Lessons →</a>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <!-- ===================== FORM ===================== -->
+  <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+    <header style="position:relative; padding:clamp(56px,11vh,120px) clamp(20px,5vw,56px) clamp(20px,4vh,40px);">
+      <div style="max-width:760px; margin:0 auto;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">1:1 Mentoring · Application</div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(38px,6.5vw,76px); line-height:0.98; letter-spacing:-0.025em; margin:0 0 22px; max-width:15ch;">Apply for 1:1 mentoring.</h1>
+        <p style="font-size:clamp(16px,2vw,19px); line-height:1.6; color:#c4bbb1; max-width:56ch; margin:0;">Mentoring is open now, and I review every application myself. The more honest you are here, the better I can tell whether we're a fit — there are no wrong answers.</p>
+      </div>
+    </header>
+
+    <section style="position:relative; padding:clamp(20px,3vh,30px) clamp(20px,5vw,56px) clamp(70px,11vh,130px); background:linear-gradient(180deg, rgba(13,11,9,0) 0%, rgba(13,11,9,0.9) 8%, rgba(13,11,9,0.94) 100%);">
+      <form ref="{{ setForm }}" onSubmit="{{ onSubmit }}" style="max-width:760px; margin:0 auto;">
+
+        <!-- 01 ABOUT YOU -->
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin:0 0 22px; padding-bottom:14px; border-bottom:1px solid rgba(242,236,228,0.1);">01 — About you</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:20px;">
+          <div>
+            <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">First name <span style="color:var(--accent);">*</span></label>
+            <input name="firstName" type="text" placeholder="John" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Last name <span style="color:var(--accent);">*</span></label>
+            <input name="lastName" type="text" placeholder="Doe" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:38px;">
+          <div>
+            <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Age <span style="color:var(--accent);">*</span></label>
+            <input name="age" type="number" min="13" max="120" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Where are you from? <span style="color:var(--accent);">*</span></label>
+            <div style="position:relative;">
+              <select name="country" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 40px 14px 16px; outline:none; cursor:pointer;">
+                <option value="" disabled selected>Select your country</option>
+                <sc-for list="{{ countries }}" as="c" hint-placeholder-count="6">
+                  <option value="{{ c }}">{{ c }}</option>
+                </sc-for>
+              </select>
+              <span style="position:absolute; top:50%; right:16px; transform:translateY(-50%); pointer-events:none; color:#8a8078; font-size:12px;">▼</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 YOUR TRADING -->
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin:0 0 22px; padding-bottom:14px; border-bottom:1px solid rgba(242,236,228,0.1);">02 — Your trading</div>
+
+        <div style="margin-bottom:26px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">How long have you been trading?</label>
+          <div style="position:relative;">
+            <select name="experience" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 40px 14px 16px; outline:none; cursor:pointer;">
+              <option value="" disabled selected>Select your experience</option>
+              <option value="Haven't started">Haven't started yet</option>
+              <option value="< 3 months">Less than 3 months</option>
+              <option value="3–12 months">3–12 months</option>
+              <option value="1–3 years">1–3 years</option>
+              <option value="3+ years">3+ years</option>
+            </select>
+            <span style="position:absolute; top:50%; right:16px; transform:translateY(-50%); pointer-events:none; color:#8a8078; font-size:12px;">▼</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:26px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:10px;">What markets do you trade?</label>
+          <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <sc-for list="{{ markets }}" as="m" hint-placeholder-count="6">
+              <button type="button" onClick="{{ m.on }}" style="font-family:'JetBrains Mono',monospace; font-size:13px; padding:10px 18px; border-radius:999px; border:1px solid rgba(242,236,228,0.16); background:rgba(24,20,18,0.5); color:#c4bbb1; cursor:pointer; transition:all 0.18s ease; {{ m.sel }}">{{ m.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ showMarketsOther }}" hint-placeholder-val="{{ false }}">
+            <input name="marketsOther" type="text" placeholder="Which other markets do you trade?" style="width:100%; margin-top:12px; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+          </sc-if>
+        </div>
+
+        <div style="margin-bottom:38px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:10px;">How do you currently trade?</label>
+          <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <sc-for list="{{ styles }}" as="s" hint-placeholder-count="5">
+              <button type="button" onClick="{{ s.on }}" style="font-family:'JetBrains Mono',monospace; font-size:13px; padding:10px 18px; border-radius:999px; border:1px solid rgba(242,236,228,0.16); background:rgba(24,20,18,0.5); color:#c4bbb1; cursor:pointer; transition:all 0.18s ease; {{ s.sel }}">{{ s.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ showStylesOther }}" hint-placeholder-val="{{ false }}">
+            <input name="stylesOther" type="text" placeholder="How else do you currently trade?" style="width:100%; margin-top:12px; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+          </sc-if>
+        </div>
+
+        <div style="margin-bottom:26px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Why did you start trading, and what is your biggest obstacle?</label>
+          <textarea name="why" rows="3" placeholder="Tell me what pulled you in — and what keeps getting in your way." style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; line-height:1.5; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none; resize:vertical; min-height:96px;"></textarea>
+        </div>
+
+        <div style="margin-bottom:26px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">What do you hope to achieve from this mentorship?</label>
+          <textarea name="goals" rows="3" placeholder="Where do you want to be in 6–12 months?" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; line-height:1.5; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none; resize:vertical; min-height:96px;"></textarea>
+        </div>
+
+        <div style="margin-bottom:26px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">What does your current schedule look like, and how much time can you commit?</label>
+          <textarea name="schedule" rows="3" placeholder="e.g. Full-time job, free 6–8am and after 6pm, ~10 hrs/week." style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; line-height:1.5; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none; resize:vertical; min-height:96px;"></textarea>
+        </div>
+
+        <div style="margin-bottom:38px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Why do you think you aren't profitable yet?</label>
+          <textarea name="notProfitable" rows="3" placeholder="Be honest — this is the most useful answer on the form." style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; line-height:1.5; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none; resize:vertical; min-height:96px;"></textarea>
+        </div>
+
+        <!-- 03 CONTACT -->
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin:0 0 22px; padding-bottom:14px; border-bottom:1px solid rgba(242,236,228,0.1);">03 — Contact</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:20px;">
+          <div>
+            <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Phone number</label>
+            <input name="phone" type="tel" placeholder="+1 (000) 000-0000" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Email <span style="color:var(--accent);">*</span></label>
+            <input name="email" type="email" placeholder="example@gmail.com" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+          </div>
+        </div>
+        <div style="margin-bottom:34px;">
+          <label style="display:block; font-weight:500; font-size:14px; color:#c4bbb1; margin-bottom:8px;">Discord <span style="color:#6b625a;">(if applicable)</span></label>
+          <input name="discord" type="text" placeholder="username#0000" style="width:100%; font-family:'Hanken Grotesk',sans-serif; font-size:16px; color:#f2ece4; background:rgba(24,20,18,0.6); border:1px solid rgba(242,236,228,0.14); border-radius:10px; padding:14px 16px; outline:none;">
+        </div>
+
+        <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-bottom:22px; padding:14px 18px; border-radius:10px; border:1px solid rgba(220,90,70,0.4); background:rgba(220,90,70,0.1); color:#e9a99c; font-size:14.5px;">{{ error }}</div>
+        </sc-if>
+
+        <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+          <button type="submit" style="display:inline-flex; align-items:center; gap:10px; padding:16px 38px; border-radius:999px; border:none; background:var(--accent); color:#100d0b; font-family:'Hanken Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; box-shadow:0 16px 44px -16px rgba(var(--accent-rgb),0.85);" style-hover="background:var(--accent-soft);">Submit application →</button>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#6b625a;">No spam. Andrew reviews each one personally.</span>
+        </div>
+      </form>
+    </section>
+  </sc-if>
+
+  <dc-import name="SiteFooter" handle="{{ handle }}" estYear="{{ estYear }}" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;handle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;@SetoTrading&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;estYear&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2023&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;amber&quot;,&quot;options&quot;:[&quot;amber&quot;,&quot;azure&quot;,&quot;violet&quot;,&quot;copper&quot;,&quot;slate&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  ACCENTS = {
+    amber:  { hex:'#d49a45', soft:'#e6b15f', rgb:[212,154,69] },
+    azure:  { hex:'#4f86f7', soft:'#74a0fa', rgb:[79,134,247] },
+    violet: { hex:'#9a7cf2', soft:'#b29bf6', rgb:[154,124,242] },
+    copper: { hex:'#c9763e', soft:'#dc9059', rgb:[201,118,62] },
+    slate:  { hex:'#8fb3c9', soft:'#abc6d8', rgb:[143,179,201] }
+  };
+  accent() { return this.ACCENTS[this.props.accent] || this.ACCENTS.amber; }
+  applyAccent() {
+    const A = this.accent();
+    const r = document.documentElement;
+    r.style.setProperty('--accent', A.hex);
+    r.style.setProperty('--accent-soft', A.soft);
+    r.style.setProperty('--accent-rgb', A.rgb.join(','));
+  }
+  state = { sent:false, error:'', firstName:'', markets:[], styles:[] };
+  componentDidMount() { this.applyAccent(); }
+  componentDidUpdate(prev) { if (prev.accent !== this.props.accent) this.applyAccent(); }
+
+  toggle(key, val) {
+    this.setState(s => {
+      const arr = s[key];
+      return { [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val] };
+    });
+  }
+
+  submit(e) {
+    e.preventDefault();
+    const f = this._form;
+    const val = (n) => (f && f.elements[n] ? String(f.elements[n].value).trim() : '');
+    const required = ['firstName', 'lastName', 'age', 'country', 'email'];
+    const missing = required.some(n => !val(n));
+    if (missing) {
+      this.setState({ error: 'Please fill in your first & last name, age, country, and email so I can reach you.' });
+      return;
+    }
+    this.setState({ sent: true, error: '', firstName: val('firstName') });
+    window.scrollTo(0, 0);
+  }
+
+  chip(key, label) {
+    const active = this.state[key].includes(label);
+    return {
+      label,
+      on: () => this.toggle(key, label),
+      sel: active ? 'border-color:var(--accent); background:rgba(var(--accent-rgb),0.14); color:var(--accent);' : ''
+    };
+  }
+
+  renderVals() {
+    const MARKETS = ['Stocks', 'Futures', 'Forex', 'Crypto', 'Options', 'Indices', 'Other'];
+    const STYLES = ['Live', 'Funded', 'Evals / Challenges', 'Demo', 'Other'];
+    return {
+      handle: this.props.handle ?? '@SetoTrading',
+      estYear: this.props.estYear ?? '2023',
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      error: this.state.error,
+      firstName: this.state.firstName,
+      setForm: (el) => { this._form = el; },
+      onSubmit: (e) => this.submit(e),
+      countries: [
+        'United States','Canada','United Kingdom','Ireland','Australia','New Zealand',
+        'Germany','France','Spain','Italy','Netherlands','Belgium','Switzerland','Austria',
+        'Sweden','Norway','Denmark','Finland','Poland','Portugal','Greece',
+        'Mexico','Brazil','Argentina','Chile','Colombia',
+        'India','Pakistan','Bangladesh','China','Japan','South Korea','Singapore',
+        'Philippines','Indonesia','Malaysia','Thailand','Vietnam',
+        'United Arab Emirates','Saudi Arabia','Israel','Turkey',
+        'South Africa','Nigeria','Kenya','Egypt','Ghana','Other'
+      ],
+      markets: MARKETS.map(m => this.chip('markets', m)),
+      styles: STYLES.map(s => this.chip('styles', s)),
+      showMarketsOther: this.state.markets.includes('Other'),
+      showStylesOther: this.state.styles.includes('Other')
+    };
+  }
+}
+</script>
+</body>
+</html>

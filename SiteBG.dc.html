@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<canvas ref="{{ canvasRef }}" style="position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  canvasRef = (el) => { this._cv = el; };
+  _rgb = [212,154,69];
+
+  renderVals() { return { canvasRef: this.canvasRef }; }
+
+  readAccent() {
+    try {
+      const v = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim();
+      if (v) { const p = v.split(',').map(n=>parseInt(n,10)); if (p.length===3 && p.every(x=>!isNaN(x))) this._rgb = p; }
+    } catch(e) {}
+  }
+
+  componentDidMount() {
+    const cv = this._cv; if (!cv) return;
+    const ctx = cv.getContext('2d');
+    let W=0, H=0, dpr=1, raf=0;
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio||1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = W*dpr; cv.height = H*dpr;
+      cv.style.width = W+'px'; cv.style.height = H+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    };
+    resize();
+    this.readAccent();
+
+    const N = 60, ps = [];
+    for (let i=0;i<N;i++) ps.push({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.7+0.4, vx:(Math.random()-0.5)*0.14, vy:(Math.random()-0.5)*0.10+0.04, depth:Math.random()*0.8+0.2, a:Math.random()*0.4+0.12, warm:Math.random()<0.45 });
+
+    // falling motes — a quiet "scroll down" cue
+    const F = 26, fs = [];
+    for (let i=0;i<F;i++) fs.push({ x:Math.random()*W, y:Math.random()*H, len:Math.random()*18+10, sp:Math.random()*0.5+0.35, a:Math.random()*0.12+0.05 });
+
+    let t=0, lastScroll=window.scrollY||0, sv=0, wheelKick=0, lastTouch=null, vScroll=0;
+    const onWheel = (e)=>{ wheelKick += e.deltaY * 0.6; };
+    const onTouchStart = (e)=>{ lastTouch = e.touches[0].clientY; };
+    const onTouchMove = (e)=>{ if(lastTouch!=null){ wheelKick += (lastTouch - e.touches[0].clientY) * 1.6; lastTouch = e.touches[0].clientY; } };
+    window.addEventListener('wheel', onWheel, {passive:true});
+    window.addEventListener('touchstart', onTouchStart, {passive:true});
+    window.addEventListener('touchmove', onTouchMove, {passive:true});
+    const lineY = (x,phase,amp,base)=> base + Math.sin(x*0.006+phase)*amp + Math.sin(x*0.013+phase*1.7)*amp*0.4;
+
+    const draw = () => {
+      t += 1;
+      if (t % 18 === 0) this.readAccent();
+      const R = this._rgb;
+      const argb = (a)=> 'rgba('+R[0]+','+R[1]+','+R[2]+','+a+')';
+      const realScroll = window.scrollY||0;
+      sv += ((realScroll-lastScroll) - sv)*0.15; lastScroll = realScroll;
+      sv += wheelKick*0.05; wheelKick *= 0.84;
+      vScroll += sv; vScroll *= 0.999;
+      const sy = realScroll>0 ? realScroll : Math.max(0, vScroll);
+      ctx.clearRect(0,0,W,H);
+
+      const gx = W*0.72, gy = H*0.32 - sy*0.05;
+      const g = ctx.createRadialGradient(gx,gy,0,gx,gy,Math.max(W,H)*0.62);
+      g.addColorStop(0, argb(0.16)); g.addColorStop(0.5, argb(0.05)); g.addColorStop(1, argb(0));
+      ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+      ctx.strokeStyle = 'rgba(242,236,228,0.028)'; ctx.lineWidth = 1;
+      const gap = 68, off = ((t*0.18 - sy*0.08) % gap + gap) % gap;
+      for (let x=-gap+off; x<W; x+=gap){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+
+      // falling motes
+      const fall = 0.6 + Math.abs(sv)*0.5;
+      for (const f of fs){
+        f.y += f.sp * fall;
+        if (f.y - f.len > H){ f.y = -f.len; f.x = Math.random()*W; }
+        const grad = ctx.createLinearGradient(0, f.y-f.len, 0, f.y);
+        grad.addColorStop(0, argb(0)); grad.addColorStop(1, argb(f.a));
+        ctx.strokeStyle = grad; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(f.x, f.y-f.len); ctx.lineTo(f.x, f.y); ctx.stroke();
+      }
+
+      const layers = [
+        {amp:18, base:H*0.70, ph:t*0.003+4, w:1,   a:0.30, par:0.03},
+        {amp:26, base:H*0.79, ph:t*0.0045,  w:1.5, a:0.55, par:0.06},
+        {amp:40, base:H*0.88, ph:t*0.006+2, w:2,   a:0.9,  par:0.12}
+      ];
+      layers.forEach(L=>{
+        const yb = L.base - sy*L.par;
+        ctx.beginPath(); ctx.moveTo(0, lineY(0,L.ph,L.amp,yb));
+        for (let x=0;x<=W;x+=8) ctx.lineTo(x, lineY(x,L.ph,L.amp,yb));
+        ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
+        const ag = ctx.createLinearGradient(0,yb-L.amp,0,H);
+        ag.addColorStop(0, argb(0.07*L.a)); ag.addColorStop(1, argb(0));
+        ctx.fillStyle = ag; ctx.fill();
+        ctx.beginPath(); ctx.moveTo(0, lineY(0,L.ph,L.amp,yb));
+        for (let x=0;x<=W;x+=8) ctx.lineTo(x, lineY(x,L.ph,L.amp,yb));
+        ctx.strokeStyle = argb(0.34*L.a); ctx.lineWidth = L.w; ctx.stroke();
+      });
+
+      for (const p of ps){
+        p.x += p.vx; p.y += p.vy - sv*p.depth*0.14;
+        if (p.x<-6) p.x=W+6; else if (p.x>W+6) p.x=-6;
+        if (p.y<-6) p.y=H+6; else if (p.y>H+6) p.y=-6;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.2832);
+        ctx.fillStyle = p.warm ? argb(p.a) : 'rgba(242,236,228,'+(p.a*0.65)+')';
+        ctx.fill();
+      }
+
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    window.addEventListener('resize', resize);
+    this._cleanup = () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+    };
+  }
+
+  componentWillUnmount() { if (this._cleanup) this._cleanup(); }
+}
+</script>
+</body>
+</html>

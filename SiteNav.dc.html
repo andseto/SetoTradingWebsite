@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px clamp(20px,5vw,56px); backdrop-filter:blur(12px); background:rgba(16,13,11,0.55); border-bottom:1px solid rgba(242,236,228,0.06); font-family:'Hanken Grotesk',sans-serif;">
+  <a href="{{ homeHref }}" style="display:flex; align-items:baseline; gap:10px; text-decoration:none; color:#f2ece4;">
+    <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:21px; letter-spacing:0.16em;">SETO</span>
+    <span style="width:6px; height:6px; border-radius:50%; background:var(--accent); transform:translateY(-2px);"></span>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; color:#8a8078;">{{ handle }}</span>
+  </a>
+  <div style="display:flex; align-items:center; gap:clamp(12px,3vw,28px); flex-wrap:wrap; justify-content:flex-end;">
+    <a href="{{ aboutHref }}" style="font-size:14px; text-decoration:none; font-weight:500; {{ sAbout }}" style-hover="color:#f2ece4;">About</a>
+    <a href="{{ modelHref }}" style="font-size:14px; text-decoration:none; font-weight:500; {{ sModel }}" style-hover="color:#f2ece4;">The Model</a>
+    <a href="{{ lessonsHref }}" style="font-size:14px; text-decoration:none; font-weight:500; {{ sLessons }}" style-hover="color:#f2ece4;">Lessons</a>
+    <a href="{{ mentoringHref }}" style="font-size:14px; text-decoration:none; font-weight:500; {{ sMentoring }}" style-hover="color:#f2ece4;">Mentoring</a>
+  </div>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const home = this.props.home || '';
+    const handle = this.props.handle || '@SetoTrading';
+    const active = this.props.active || '';
+    const link = (n)=> 'color:' + (active===n ? 'var(--accent)' : '#b3aaa1') + ';';
+    return {
+      handle,
+      homeHref: home || '#top',
+      aboutHref: home + '#about',
+      modelHref: home + '#model',
+      followHref: home + '#follow',
+      lessonsHref: 'Lessons.dc.html',
+      mentoringHref: 'Mentoring.dc.html',
+      sAbout: link('about'), sModel: link('model'), sLessons: link('lessons'), sMentoring: link('mentoring')
+    };
+  }
+}
+</script>
+</body>
+</html>
