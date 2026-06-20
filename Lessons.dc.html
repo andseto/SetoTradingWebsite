@@ -53,7 +53,6 @@
                   <span style="position:relative; z-index:2; width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
                     <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
                   </span>
-                  <span style="position:absolute; top:12px; left:12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--accent);">{{ l.tag }}</span>
                 </div>
                 <div style="padding:22px 24px 24px; display:flex; flex-direction:column; gap:12px;">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
@@ -114,14 +113,14 @@ class Component extends DCLogic {
     row.scrollBy({ left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth' });
   }
 
-  buildLessonItem(tag, title, link, body) {
+  buildLessonItem(title, link, body) {
     const videoIdMatch = link && link.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
     const statusLabel = link ? 'WATCH' : 'COMING SOON';
     const bgStyle = videoId
       ? `background-image:url('https://img.youtube.com/vi/${videoId}/maxresdefault.jpg'), repeating-linear-gradient(135deg, rgba(0,0,0,0.24) 0 10px, transparent 10px 20px); background-size:cover, auto; background-position:center;`
       : `background-image:repeating-linear-gradient(135deg, rgba(242,236,228,0.04) 0 10px, transparent 10px 20px); background-color:rgba(16,13,11,0.7);`;
-    return { tag, title, link, body, statusLabel, bgStyle };
+    return { title, link, body, statusLabel, bgStyle };
   }
 
   renderVals() {
@@ -130,41 +129,41 @@ class Component extends DCLogic {
         id: 'day-trading-information',
         title: 'Day trading Information',
         items: [
-          this.buildLessonItem('01 · BIAS', 'What is Day Trading Simple & Honest', 'https://www.youtube.com/watch?v=jgAeVtJFn7k', 'I explain a brief summary of what day trading is, covering different paths and giving honest information.'),
-          this.buildLessonItem('02 · SETUPS', 'How to Start Day Trading Easily', 'https://www.youtube.com/watch?v=2R-oMVTNVBM', 'This video explains how someone should start day trading without stressing and spending any money.'),
-          this.buildLessonItem('03 · TIMING', 'Confirmation Candles', null, 'Reading the exact price action that signals the last possible entry.'),
-          this.buildLessonItem('04 · JOURNAL', 'Track Every Move', null, 'A simple system for logging edge, outcome, and post-trade notes.'),
-          this.buildLessonItem('04 · JOURNAL', 'Track Every Move2', null, 'A simple system for logging edge, outcome, and post-trade notes2.')
+          this.buildLessonItem('What is Day Trading Simple & Honest', 'https://www.youtube.com/watch?v=jgAeVtJFn7k', 'I explain a brief summary of what day trading is, covering different paths and giving honest information.'),
+          this.buildLessonItem('How to Start Day Trading Easily', 'https://www.youtube.com/watch?v=2R-oMVTNVBM', 'This video explains how someone should start day trading without stressing and spending any money.'),
+          this.buildLessonItem('Confirmation Candles', null, 'Reading the exact price action that signals the last possible entry.'),
+          this.buildLessonItem('Track Every Move', null, 'A simple system for logging edge, outcome, and post-trade notes.'),
+          this.buildLessonItem('Track Every Move2', null, 'A simple system for logging edge, outcome, and post-trade notes2.')
         ]
       },
       {
         id: 'confluences',
         title: 'Confluences',
         items: [
-          this.buildLessonItem('05 · FVG', 'Fair Value Gap Setup', null, 'How gap reclaim zones combine with support and bias.'),
-          this.buildLessonItem('06 · SMT', 'Correlation Confirmation', null, 'Using correlated markets to validate your directional bias.'),
-          this.buildLessonItem('07 · ORDER FLOW', 'Liquidity Clusters', null, 'Where invisible orders live and why price often turns there.'),
-          this.buildLessonItem('08 · STRUCTURE', 'Hidden Breaks', null, 'The signals that show a move is really starting, not just noise.')
+          this.buildLessonItem('Fair Value Gap Setup', null, 'How gap reclaim zones combine with support and bias.'),
+          this.buildLessonItem('Correlation Confirmation', null, 'Using correlated markets to validate your directional bias.'),
+          this.buildLessonItem('Liquidity Clusters', null, 'Where invisible orders live and why price often turns there.'),
+          this.buildLessonItem('Hidden Breaks', null, 'The signals that show a move is really starting, not just noise.')
         ]
       },
       {
         id: 'trade-risk-management',
         title: 'Trade/Risk Management',
         items: [
-          this.buildLessonItem('09 · STOPS', 'Where the Trade Dies', null, 'Setting stops that respect the setup without killing the edge.'),
-          this.buildLessonItem('10 · TARGETS', 'R-Multiple Planning', null, 'How I size targets and manage risk for 2–4R trades.'),
-          this.buildLessonItem('11 · POSITION', 'Sizing Rules', null, 'Risk sizing that keeps every trade small enough to survive.'),
-          this.buildLessonItem('12 · REVIEW', 'Improve Every Week', null, 'The checklist I use after every session to clean my process.')
+          this.buildLessonItem('Where the Trade Dies', null, 'Setting stops that respect the setup without killing the edge.'),
+          this.buildLessonItem('R-Multiple Planning', null, 'How I size targets and manage risk for 2–4R trades.'),
+          this.buildLessonItem('Sizing Rules', null, 'Risk sizing that keeps every trade small enough to survive.'),
+          this.buildLessonItem('Improve Every Week', null, 'The checklist I use after every session to clean my process.')
         ]
       },
       {
         id: 'invisible-barriers',
         title: 'Invisible barriers',
         items: [
-          this.buildLessonItem('13 · PSYCHOLOGY', 'Mindset Barriers', null, 'The hidden mental blocks that stop good trades from happening.'),
-          this.buildLessonItem('14 · FEAR', 'Avoiding Overtrade', null, 'Why waiting is often the strongest edge in your account.'),
-          this.buildLessonItem('15 · PATIENCE', 'Holding the Plan', null, 'How to stick to your rules when the market gets choppy.'),
-          this.buildLessonItem('16 · INSIGHT', 'Clarity in Chaos', null, 'Finding the simplest path when the market feels messy.')
+          this.buildLessonItem('Mindset Barriers', null, 'The hidden mental blocks that stop good trades from happening.'),
+          this.buildLessonItem('Avoiding Overtrade', null, 'Why waiting is often the strongest edge in your account.'),
+          this.buildLessonItem('Holding the Plan', null, 'How to stick to your rules when the market gets choppy.'),
+          this.buildLessonItem('Clarity in Chaos', null, 'Finding the simplest path when the market feels messy.')
         ]
       }
     ];
