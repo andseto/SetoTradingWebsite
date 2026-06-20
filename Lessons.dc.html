@@ -37,24 +37,29 @@
 
   <!-- LESSON GRID -->
   <section style="position:relative; padding:clamp(20px,4vh,40px) clamp(20px,5vw,56px) clamp(60px,9vh,100px); background:linear-gradient(180deg, rgba(13,11,9,0) 0%, rgba(13,11,9,0.9) 10%, rgba(13,11,9,0.92) 100%);">
-    <div style="max-width:1200px; margin:0 auto;">
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px;">
-        <sc-for list="{{ lessons }}" as="l" hint-placeholder-count="6">
-          <div style="border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; background:rgba(24,20,18,0.5); display:flex; flex-direction:column;" style-hover="border-color:rgba(var(--accent-rgb),0.45);">
-            <div style="position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(135deg, rgba(242,236,228,0.04) 0 10px, transparent 10px 20px); background-color:rgba(16,13,11,0.7); display:flex; align-items:center; justify-content:center;">
-              <span style="width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
-                <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
-              </span>
-              <span style="position:absolute; top:12px; left:12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--accent);">{{ l.tag }}</span>
-              <span style="position:absolute; top:12px; right:12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.12em; padding:5px 9px; border-radius:999px; background:rgba(16,13,11,0.7); border:1px solid rgba(242,236,228,0.14); color:#b3aaa1;">COMING SOON</span>
-            </div>
-            <div style="padding:22px 24px 26px; display:flex; flex-direction:column; gap:10px;">
-              <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ l.title }}</h3>
-              <p style="font-size:14.5px; line-height:1.6; color:#a89f96; margin:0;">{{ l.body }}</p>
-            </div>
+    <div style="max-width:1200px; margin:0 auto; display:grid; gap:42px;">
+      <sc-for list="{{ sections }}" as="section" hint-placeholder-count="4">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">{{ section.title }}</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px;">
+            <sc-for list="{{ section.items }}" as="l" hint-placeholder-count="2">
+              <div style="border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; background:rgba(24,20,18,0.5); display:flex; flex-direction:column;" style-hover="border-color:rgba(var(--accent-rgb),0.45);">
+                <div style="position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(135deg, rgba(242,236,228,0.04) 0 10px, transparent 10px 20px); background-color:rgba(16,13,11,0.7); display:flex; align-items:center; justify-content:center;">
+                  <span style="width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
+                    <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
+                  </span>
+                  <span style="position:absolute; top:12px; left:12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--accent);">{{ l.tag }}</span>
+                  <span style="position:absolute; top:12px; right:12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.12em; padding:5px 9px; border-radius:999px; background:rgba(16,13,11,0.7); border:1px solid rgba(242,236,228,0.14); color:#b3aaa1;">COMING SOON</span>
+                </div>
+                <div style="padding:22px 24px 26px; display:flex; flex-direction:column; gap:10px;">
+                  <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ l.title }}</h3>
+                  <p style="font-size:14.5px; line-height:1.6; color:#a89f96; margin:0;">{{ l.body }}</p>
+                </div>
+              </div>
+            </sc-for>
           </div>
-        </sc-for>
-      </div>
+        </div>
+      </sc-for>
 
       <!-- CTA TO MENTORING -->
       <div style="margin-top:32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; border:1px solid rgba(var(--accent-rgb),0.35); border-radius:16px; background:linear-gradient(120deg, rgba(var(--accent-rgb),0.08), rgba(24,20,18,0.4)); padding:28px clamp(24px,4vw,40px);">
@@ -95,13 +100,35 @@ class Component extends DCLogic {
     return {
       handle: this.props.handle ?? '@SetoTrading',
       estYear: this.props.estYear ?? '2023',
-      lessons: [
-        { tag:'01 · BIAS', title:'Higher-Timeframe Bias', body:'How I read the HTF story and only take trades that agree with it.' },
-        { tag:'02 · IMBALANCE', title:'Fair Value Gaps', body:'Spotting FVGs, why they form, and how price comes back to fill them.' },
-        { tag:'03 · ENTRY', title:'OTE & Discount', body:'The 0.62–0.79 zone — finding the last possible option to enter.' },
-        { tag:'04 · CONFLUENCE', title:'SMT Divergence', body:'Using correlated pairs to confirm a turn before you commit risk.' },
-        { tag:'05 · EXECUTION', title:'Entry Models', body:'Turning a setup into an actual entry, stop, and target with a plan.' },
-        { tag:'06 · DISCIPLINE', title:'Risk & R-Multiples', body:'Fixed risk, 2–4R targets, and the mindset to let trades play out.' }
+      sections: [
+        {
+          title: 'Day trading Information',
+          items: [
+            { tag:'01 · BIAS', title:'Higher-Timeframe Bias', body:'How I read the HTF story and only take trades that agree with it.' },
+            { tag:'02 · IMBALANCE', title:'Fair Value Gaps', body:'Spotting FVGs, why they form, and how price comes back to fill them.' }
+          ]
+        },
+        {
+          title: 'Confluences',
+          items: [
+            { tag:'03 · ENTRY', title:'OTE & Discount', body:'The 0.62–0.79 zone — finding the last possible option to enter.' },
+            { tag:'04 · CONFLUENCE', title:'SMT Divergence', body:'Using correlated pairs to confirm a turn before you commit risk.' }
+          ]
+        },
+        {
+          title: 'Trade/Risk Management',
+          items: [
+            { tag:'05 · EXECUTION', title:'Entry Models', body:'Turning a setup into an actual entry, stop, and target with a plan.' },
+            { tag:'06 · DISCIPLINE', title:'Risk & R-Multiples', body:'Fixed risk, 2–4R targets, and the mindset to let trades play out.' }
+          ]
+        },
+        {
+          title: 'Invisible barrieres',
+          items: [
+            { tag:'07 · MINDSET', title:'Mental Edges', body:'How to stay patient, avoid FOMO, and respect the rules when trades get messy.' },
+            { tag:'08 · STRUCTURE', title:'Order Flow Barriers', body:'Reading hidden levels and liquidity zones that often repel price before a real move.' }
+          ]
+        }
       ]
     };
   }
