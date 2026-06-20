@@ -41,7 +41,7 @@
       <sc-for list="{{ sections }}" as="section" hint-placeholder-count="4">
         <div>
           <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">{{ section.title }}</div>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px;">
             <sc-for list="{{ section.items }}" as="l" hint-placeholder-count="2">
               <div style="border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; background:rgba(24,20,18,0.5); display:flex; flex-direction:column;" style-hover="border-color:rgba(var(--accent-rgb),0.45);">
                 <div style="position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(135deg, rgba(242,236,228,0.04) 0 10px, transparent 10px 20px); background-color:rgba(16,13,11,0.7); display:flex; align-items:center; justify-content:center;">
@@ -105,28 +105,36 @@ class Component extends DCLogic {
           title: 'Day trading Information',
           items: [
             { tag:'01 · BIAS', title:'Higher-Timeframe Bias', body:'How I read the HTF story and only take trades that agree with it.' },
-            { tag:'02 · IMBALANCE', title:'Fair Value Gaps', body:'Spotting FVGs, why they form, and how price comes back to fill them.' }
+            { tag:'02 · SETUPS', title:'Valid Background Zones', body:'Choosing high-probability areas and avoiding weak structure.' },
+            { tag:'03 · TIMING', title:'Confirmation Candles', body:'Reading the exact price action that signals the last possible entry.' },
+            { tag:'04 · JOURNAL', title:'Track Every Move', body:'A simple system for logging edge, outcome, and post-trade notes.' }
           ]
         },
         {
           title: 'Confluences',
           items: [
-            { tag:'03 · ENTRY', title:'OTE & Discount', body:'The 0.62–0.79 zone — finding the last possible option to enter.' },
-            { tag:'04 · CONFLUENCE', title:'SMT Divergence', body:'Using correlated pairs to confirm a turn before you commit risk.' }
+            { tag:'05 · FVG', title:'Fair Value Gap Setup', body:'How gap reclaim zones combine with support and bias.' },
+            { tag:'06 · SMT', title:'Correlation Confirmation', body:'Using correlated markets to validate your directional bias.' },
+            { tag:'07 · ORDER FLOW', title:'Liquidity Clusters', body:'Where invisible orders live and why price often turns there.' },
+            { tag:'08 · STRUCTURE', title:'Hidden Breaks', body:'The signals that show a move is really starting, not just noise.' }
           ]
         },
         {
           title: 'Trade/Risk Management',
           items: [
-            { tag:'05 · EXECUTION', title:'Entry Models', body:'Turning a setup into an actual entry, stop, and target with a plan.' },
-            { tag:'06 · DISCIPLINE', title:'Risk & R-Multiples', body:'Fixed risk, 2–4R targets, and the mindset to let trades play out.' }
+            { tag:'09 · STOPS', title:'Where the Trade Dies', body:'Setting stops that respect the setup without killing the edge.' },
+            { tag:'10 · TARGETS', title:'R-Multiple Planning', body:'How I size targets and manage risk for 2–4R trades.' },
+            { tag:'11 · POSITION', title:'Sizing Rules', body:'Risk sizing that keeps every trade small enough to survive.' },
+            { tag:'12 · REVIEW', title:'Improve Every Week', body:'The checklist I use after every session to clean my process.' }
           ]
         },
         {
           title: 'Invisible barrieres',
           items: [
-            { tag:'07 · MINDSET', title:'Mental Edges', body:'How to stay patient, avoid FOMO, and respect the rules when trades get messy.' },
-            { tag:'08 · STRUCTURE', title:'Order Flow Barriers', body:'Reading hidden levels and liquidity zones that often repel price before a real move.' }
+            { tag:'13 · PSYCHOLOGY', title:'Mindset Barriers', body:'The hidden mental blocks that stop good trades from happening.' },
+            { tag:'14 · FEAR', title:'Avoiding Overtrade', body:'Why waiting is often the strongest edge in your account.' },
+            { tag:'15 · PATIENCE', title:'Holding the Plan', body:'How to stick to your rules when the market gets choppy.' },
+            { tag:'16 · INSIGHT', title:'Clarity in Chaos', body:'Finding the simplest path when the market feels messy.' }
           ]
         }
       ]
