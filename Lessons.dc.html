@@ -51,17 +51,24 @@
             <sc-for list="{{ section.items }}" as="l" hint-placeholder-count="2">
               <div style="min-width:260px; scroll-snap-align:start; border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; background:rgba(24,20,18,0.5); display:flex; flex-direction:column;" style-hover="border-color:rgba(var(--accent-rgb),0.45);">
                 <div style="position:relative; aspect-ratio:16/9; {{ l.bgStyle }} display:flex; align-items:center; justify-content:center;">
-                  <span style="width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
+                  <sc-if value="{{ l.link }}">
+                    <a href="{{ l.link }}" target="_blank" rel="noreferrer" style="position:absolute; inset:0; z-index:1;"></a>
+                  </sc-if>
+                  <span style="position:relative; z-index:2; width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
                     <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
                   </span>
                   <span style="position:absolute; top:12px; left:12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--accent);">{{ l.tag }}</span>
-                  <span style="position:absolute; top:12px; right:12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.12em; padding:5px 9px; border-radius:999px; background:rgba(16,13,11,0.7); border:1px solid rgba(242,236,228,0.14); color:#b3aaa1;">{{ l.statusLabel }}</span>
                 </div>
                 <div style="padding:22px 24px 24px; display:flex; flex-direction:column; gap:12px;">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-                    <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ l.title }}</h3>
+                    <sc-if value="{{ l.link }}">
+                      <a href="{{ l.link }}" target="_blank" rel="noreferrer" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; line-height:1.15; margin:0; color:#f2ece4; text-decoration:none;">{{ l.title }}</a>
+                    </sc-if>
                     <sc-if value="{{ l.link }}">
                       <a href="{{ l.link }}" target="_blank" rel="noreferrer" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); text-decoration:none;">Watch</a>
+                    </sc-if>
+                    <sc-if value="{{ !l.link }}">
+                      <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ l.title }}</h3>
                     </sc-if>
                   </div>
                   <p style="font-size:14.5px; line-height:1.6; color:#a89f96; margin:0;">{{ l.body }}</p>
