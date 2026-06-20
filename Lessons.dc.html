@@ -39,11 +39,17 @@
   <section style="position:relative; padding:clamp(20px,4vh,40px) clamp(20px,5vw,56px) clamp(60px,9vh,100px); background:linear-gradient(180deg, rgba(13,11,9,0) 0%, rgba(13,11,9,0.9) 10%, rgba(13,11,9,0.92) 100%);">
     <div style="max-width:1200px; margin:0 auto; display:grid; gap:42px;">
       <sc-for list="{{ sections }}" as="section" hint-placeholder-count="4">
-        <div>
-          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">{{ section.title }}</div>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px;">
+        <div data-section="{{ section.id }}">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent);">{{ section.title }}</div>
+            <div style="display:flex; gap:12px;">
+              <button type="button" onClick="{{ section.scrollLeft }}" aria-label="Scroll left" style="width:40px; height:40px; border-radius:50%; border:1px solid rgba(242,236,228,0.14); background:rgba(16,13,11,0.7); color:#f2ece4; font-size:20px; cursor:pointer;">‹</button>
+              <button type="button" onClick="{{ section.scrollRight }}" aria-label="Scroll right" style="width:40px; height:40px; border-radius:50%; border:1px solid rgba(242,236,228,0.14); background:rgba(16,13,11,0.7); color:#f2ece4; font-size:20px; cursor:pointer;">›</button>
+            </div>
+          </div>
+          <div class="carousel-row" data-section="{{ section.id }}" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:4px;">
             <sc-for list="{{ section.items }}" as="l" hint-placeholder-count="2">
-              <div style="border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; background:rgba(24,20,18,0.5); display:flex; flex-direction:column;" style-hover="border-color:rgba(var(--accent-rgb),0.45);">
+              <div style="min-width:260px; scroll-snap-align:start; border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; background:rgba(24,20,18,0.5); display:flex; flex-direction:column;" style-hover="border-color:rgba(var(--accent-rgb),0.45);">
                 <div style="position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(135deg, rgba(242,236,228,0.04) 0 10px, transparent 10px 20px); background-color:rgba(16,13,11,0.7); display:flex; align-items:center; justify-content:center;">
                   <span style="width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
                     <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
@@ -51,8 +57,11 @@
                   <span style="position:absolute; top:12px; left:12px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--accent);">{{ l.tag }}</span>
                   <span style="position:absolute; top:12px; right:12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:0.12em; padding:5px 9px; border-radius:999px; background:rgba(16,13,11,0.7); border:1px solid rgba(242,236,228,0.14); color:#b3aaa1;">COMING SOON</span>
                 </div>
-                <div style="padding:22px 24px 26px; display:flex; flex-direction:column; gap:10px;">
-                  <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ l.title }}</h3>
+                <div style="padding:22px 24px 24px; display:flex; flex-direction:column; gap:12px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                    <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ l.title }}</h3>
+                    <a href="{{ l.link }}" target="_blank" rel="noreferrer" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); text-decoration:none;">Watch</a>
+                  </div>
                   <p style="font-size:14.5px; line-height:1.6; color:#a89f96; margin:0;">{{ l.body }}</p>
                 </div>
               </div>
@@ -96,48 +105,65 @@ class Component extends DCLogic {
   componentDidMount() { this.applyAccent(); }
   componentDidUpdate(prev) { if (prev.accent !== this.props.accent) this.applyAccent(); }
 
+  scrollSection(direction, sectionId) {
+    const row = document.querySelector(`.carousel-row[data-section="${sectionId}"]`);
+    if (!row) return;
+    const scrollAmount = row.clientWidth * 0.9;
+    row.scrollBy({ left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth' });
+  }
+
   renderVals() {
+    const sections = [
+      {
+        id: 'day-trading-information',
+        title: 'Day trading Information',
+        items: [
+          { tag:'01 · BIAS', title:'Higher-Timeframe Bias', link:'https://youtu.be/jgAeVtJFn7k', body:'How I read the HTF story and only take trades that agree with it.' },
+          { tag:'02 · SETUPS', title:'Valid Background Zones', body:'Choosing high-probability areas and avoiding weak structure.' },
+          { tag:'03 · TIMING', title:'Confirmation Candles', body:'Reading the exact price action that signals the last possible entry.' },
+          { tag:'04 · JOURNAL', title:'Track Every Move', body:'A simple system for logging edge, outcome, and post-trade notes.' }
+        ]
+      },
+      {
+        id: 'confluences',
+        title: 'Confluences',
+        items: [
+          { tag:'05 · FVG', title:'Fair Value Gap Setup', body:'How gap reclaim zones combine with support and bias.' },
+          { tag:'06 · SMT', title:'Correlation Confirmation', body:'Using correlated markets to validate your directional bias.' },
+          { tag:'07 · ORDER FLOW', title:'Liquidity Clusters', body:'Where invisible orders live and why price often turns there.' },
+          { tag:'08 · STRUCTURE', title:'Hidden Breaks', body:'The signals that show a move is really starting, not just noise.' }
+        ]
+      },
+      {
+        id: 'trade-risk-management',
+        title: 'Trade/Risk Management',
+        items: [
+          { tag:'09 · STOPS', title:'Where the Trade Dies', body:'Setting stops that respect the setup without killing the edge.' },
+          { tag:'10 · TARGETS', title:'R-Multiple Planning', body:'How I size targets and manage risk for 2–4R trades.' },
+          { tag:'11 · POSITION', title:'Sizing Rules', body:'Risk sizing that keeps every trade small enough to survive.' },
+          { tag:'12 · REVIEW', title:'Improve Every Week', body:'The checklist I use after every session to clean my process.' }
+        ]
+      },
+      {
+        id: 'invisible-barriers',
+        title: 'Invisible barrieres',
+        items: [
+          { tag:'13 · PSYCHOLOGY', title:'Mindset Barriers', body:'The hidden mental blocks that stop good trades from happening.' },
+          { tag:'14 · FEAR', title:'Avoiding Overtrade', body:'Why waiting is often the strongest edge in your account.' },
+          { tag:'15 · PATIENCE', title:'Holding the Plan', body:'How to stick to your rules when the market gets choppy.' },
+          { tag:'16 · INSIGHT', title:'Clarity in Chaos', body:'Finding the simplest path when the market feels messy.' }
+        ]
+      }
+    ];
+    const bindScroll = (section) => ({
+      ...section,
+      scrollLeft: () => this.scrollSection('left', section.id),
+      scrollRight: () => this.scrollSection('right', section.id)
+    });
     return {
       handle: this.props.handle ?? '@SetoTrading',
       estYear: this.props.estYear ?? '2023',
-      sections: [
-        {
-          title: 'Day trading Information',
-          items: [
-            { tag:'01 · BIAS', title:'Higher-Timeframe Bias', body:'How I read the HTF story and only take trades that agree with it.' },
-            { tag:'02 · SETUPS', title:'Valid Background Zones', body:'Choosing high-probability areas and avoiding weak structure.' },
-            { tag:'03 · TIMING', title:'Confirmation Candles', body:'Reading the exact price action that signals the last possible entry.' },
-            { tag:'04 · JOURNAL', title:'Track Every Move', body:'A simple system for logging edge, outcome, and post-trade notes.' }
-          ]
-        },
-        {
-          title: 'Confluences',
-          items: [
-            { tag:'05 · FVG', title:'Fair Value Gap Setup', body:'How gap reclaim zones combine with support and bias.' },
-            { tag:'06 · SMT', title:'Correlation Confirmation', body:'Using correlated markets to validate your directional bias.' },
-            { tag:'07 · ORDER FLOW', title:'Liquidity Clusters', body:'Where invisible orders live and why price often turns there.' },
-            { tag:'08 · STRUCTURE', title:'Hidden Breaks', body:'The signals that show a move is really starting, not just noise.' }
-          ]
-        },
-        {
-          title: 'Trade/Risk Management',
-          items: [
-            { tag:'09 · STOPS', title:'Where the Trade Dies', body:'Setting stops that respect the setup without killing the edge.' },
-            { tag:'10 · TARGETS', title:'R-Multiple Planning', body:'How I size targets and manage risk for 2–4R trades.' },
-            { tag:'11 · POSITION', title:'Sizing Rules', body:'Risk sizing that keeps every trade small enough to survive.' },
-            { tag:'12 · REVIEW', title:'Improve Every Week', body:'The checklist I use after every session to clean my process.' }
-          ]
-        },
-        {
-          title: 'Invisible barrieres',
-          items: [
-            { tag:'13 · PSYCHOLOGY', title:'Mindset Barriers', body:'The hidden mental blocks that stop good trades from happening.' },
-            { tag:'14 · FEAR', title:'Avoiding Overtrade', body:'Why waiting is often the strongest edge in your account.' },
-            { tag:'15 · PATIENCE', title:'Holding the Plan', body:'How to stick to your rules when the market gets choppy.' },
-            { tag:'16 · INSIGHT', title:'Clarity in Chaos', body:'Finding the simplest path when the market feels messy.' }
-          ]
-        }
-      ]
+      sections: sections.map(bindScroll)
     };
   }
 }
