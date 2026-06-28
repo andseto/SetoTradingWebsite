@@ -256,7 +256,7 @@ class Component extends DCLogic {
         this.setState({ sent: true, submitting: false, firstName: val('firstName') });
         window.scrollTo(0, 0);
       } else {
-        this.setState({ submitting: false, error: 'Something went wrong. Please try again or email me directly at setotrading.us@gmail.com.' });
+        this.setState({ submitting: false, error: data.message || 'Something went wrong. Please try again or email me directly at setotrading.us@gmail.com.' });
       }
     } catch {
       this.setState({ submitting: false, error: 'Network error. Please check your connection and try again.' });
