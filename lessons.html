@@ -50,9 +50,14 @@
                   <sc-if value="{{ l.link }}">
                     <a href="{{ l.link }}" target="_blank" rel="noreferrer" style="position:absolute; inset:0; z-index:1;"></a>
                   </sc-if>
-                  <span style="position:relative; z-index:2; width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
-                    <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
-                  </span>
+                  <sc-if value="{{ l.link }}">
+                    <span style="position:relative; z-index:2; width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
+                      <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
+                    </span>
+                  </sc-if>
+                  <sc-if value="{{ !l.link }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; padding:10px 20px; border-radius:999px; background:rgba(16,13,11,0.72); backdrop-filter:blur(6px); border:1px solid rgba(242,236,228,0.2); color:#8a8078;">Video Coming Soon</div>
+                  </sc-if>
                 </div>
                 <div style="padding:22px 24px 24px; display:flex; flex-direction:column; gap:12px;">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
