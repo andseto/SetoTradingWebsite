@@ -1,5 +1,9 @@
 {
+  "cleanUrls": true,
   "redirects": [
-    { "source": "/SetoTrading.dc.html", "destination": "/", "permanent": true }
+    { "source": "/SetoTrading.dc.html", "destination": "/", "permanent": true },
+    { "source": "/Lessons.dc.html", "destination": "/lessons", "permanent": true },
+    { "source": "/Mentoring.dc.html", "destination": "/mentoring", "permanent": true },
+    { "source": "/Apply.dc.html", "destination": "/apply", "permanent": true }
   ]
 }

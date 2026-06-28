@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #d49a45; --accent-soft: #e6b15f; --accent-rgb: 212,154,69; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #100d0b; }
+  *, *::before, *::after { box-sizing: border-box; }
+  ::selection { background: var(--accent); color: #100d0b; }
+</style>
+</helmet>
+
+<dc-import name="SiteBG" style="position:fixed; inset:0; z-index:0; pointer-events:none;" hint-size="100%,100%"></dc-import>
+
+<div style="position:relative; z-index:1; font-family:'Hanken Grotesk',sans-serif; color:#f2ece4; overflow-x:clip;">
+
+  <dc-import name="SiteNav" home="/" active="lessons" handle="{{ handle }}" hint-size="100%,68px"></dc-import>
+
+  <!-- HEADER -->
+  <header style="position:relative; padding:clamp(60px,12vh,130px) clamp(20px,5vw,56px) clamp(30px,5vh,56px);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">Lessons &amp; Confluences</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(40px,7vw,86px); line-height:0.98; letter-spacing:-0.025em; margin:0 0 24px; max-width:16ch;">Learn the model, one confluence at a time.</h1>
+      <p style="font-size:clamp(16px,2vw,20px); line-height:1.6; color:#c4bbb1; max-width:46ch; margin:0;">Free video breakdowns of every piece of the LPO model — from higher-timeframe bias to execution. <span style="color:#f2ece4;">Dropping on YouTube soon.</span></p>
+    </div>
+  </header>
+
+  <!-- LESSON GRID -->
+  <section style="position:relative; padding:clamp(20px,4vh,40px) clamp(20px,5vw,56px) clamp(60px,9vh,100px); background:linear-gradient(180deg, rgba(13,11,9,0) 0%, rgba(13,11,9,0.9) 10%, rgba(13,11,9,0.92) 100%);">
+    <div style="max-width:1200px; margin:0 auto; display:grid; gap:42px;">
+      <sc-for list="{{ sections }}" as="section" hint-placeholder-count="4">
+        <div data-section="{{ section.id }}">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent);">{{ section.title }}</div>
+          </div>
+          <div class="carousel-row" data-section="{{ section.id }}" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:4px;">
+            <sc-for list="{{ section.items }}" as="l" hint-placeholder-count="2">
+              <div style="min-width:260px; scroll-snap-align:start; border:1px solid rgba(242,236,228,0.1); border-radius:16px; overflow:hidden; background:rgba(24,20,18,0.5); display:flex; flex-direction:column;" style-hover="border-color:rgba(var(--accent-rgb),0.45);">
+                <div style="position:relative; aspect-ratio:16/9; {{ l.bgStyle }} display:flex; align-items:center; justify-content:center;">
+                  <sc-if value="{{ l.link }}">
+                    <a href="{{ l.link }}" target="_blank" rel="noreferrer" style="position:absolute; inset:0; z-index:1;"></a>
+                  </sc-if>
+                  <span style="position:relative; z-index:2; width:56px; height:56px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -10px rgba(var(--accent-rgb),0.7);">
+                    <span style="width:0; height:0; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent #100d0b; margin-left:3px;"></span>
+                  </span>
+                </div>
+                <div style="padding:22px 24px 24px; display:flex; flex-direction:column; gap:12px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                    <sc-if value="{{ l.link }}">
+                      <a href="{{ l.link }}" target="_blank" rel="noreferrer" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; line-height:1.15; margin:0; color:#f2ece4; text-decoration:none;">{{ l.title }}</a>
+                    </sc-if>
+                    <sc-if value="{{ !l.link }}">
+                      <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ l.title }}</h3>
+                    </sc-if>
+                  </div>
+                  <p style="font-size:14.5px; line-height:1.6; color:#a89f96; margin:0;">{{ l.body }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+
+      <!-- CTA TO MENTORING -->
+      <div style="margin-top:32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; border:1px solid rgba(var(--accent-rgb),0.35); border-radius:16px; background:linear-gradient(120deg, rgba(var(--accent-rgb),0.08), rgba(24,20,18,0.4)); padding:28px clamp(24px,4vw,40px);">
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(20px,2.4vw,26px); margin-bottom:6px;">Want the lessons applied to your charts?</div>
+          <div style="font-size:15px; color:#a89f96;">1:1 mentoring takes you from theory to live execution, step by step.</div>
+        </div>
+        <a href="/mentoring" style="display:inline-flex; align-items:center; gap:9px; padding:14px 28px; border-radius:999px; background:var(--accent); color:#100d0b; font-weight:600; font-size:15px; text-decoration:none; white-space:nowrap; box-shadow:0 14px 40px -14px rgba(var(--accent-rgb),0.8);" style-hover="background:var(--accent-soft);">Explore mentoring →</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" handle="{{ handle }}" estYear="{{ estYear }}" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;handle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;@SetoTrading&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;estYear&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2023&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;amber&quot;,&quot;options&quot;:[&quot;amber&quot;,&quot;azure&quot;,&quot;violet&quot;,&quot;copper&quot;,&quot;slate&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  ACCENTS = {
+    amber:  { hex:'#d49a45', soft:'#e6b15f', rgb:[212,154,69] },
+    azure:  { hex:'#4f86f7', soft:'#74a0fa', rgb:[79,134,247] },
+    violet: { hex:'#9a7cf2', soft:'#b29bf6', rgb:[154,124,242] },
+    copper: { hex:'#c9763e', soft:'#dc9059', rgb:[201,118,62] },
+    slate:  { hex:'#8fb3c9', soft:'#abc6d8', rgb:[143,179,201] }
+  };
+  accent() { return this.ACCENTS[this.props.accent] || this.ACCENTS.amber; }
+  applyAccent() {
+    const A = this.accent();
+    const r = document.documentElement;
+    r.style.setProperty('--accent', A.hex);
+    r.style.setProperty('--accent-soft', A.soft);
+    r.style.setProperty('--accent-rgb', A.rgb.join(','));
+  }
+  componentDidMount() { this.applyAccent(); }
+  componentDidUpdate(prev) { if (prev.accent !== this.props.accent) this.applyAccent(); }
+
+  scrollSection(direction, sectionId) {
+    const row = document.querySelector(`.carousel-row[data-section="${sectionId}"]`);
+    if (!row) return;
+    const scrollAmount = row.clientWidth * 0.9;
+    row.scrollBy({ left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth' });
+  }
+
+  buildLessonItem(title, link, body) {
+    const videoIdMatch = link && link.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    const statusLabel = link ? 'WATCH' : 'COMING SOON';
+    const bgStyle = videoId
+      ? `background-image:url('https://img.youtube.com/vi/${videoId}/maxresdefault.jpg'), repeating-linear-gradient(135deg, rgba(0,0,0,0.24) 0 10px, transparent 10px 20px); background-size:cover, auto; background-position:center;`
+      : `background-image:repeating-linear-gradient(135deg, rgba(242,236,228,0.04) 0 10px, transparent 10px 20px); background-color:rgba(16,13,11,0.7);`;
+    return { title, link, body, statusLabel, bgStyle };
+  }
+
+  renderVals() {
+    const sections = [
+      {
+        id: 'day-trading-information',
+        title: 'Day trading Information',
+        items: [
+          this.buildLessonItem('What is Day Trading Simple & Honest', 'https://www.youtube.com/watch?v=jgAeVtJFn7k', 'I explain a brief summary of what day trading is, covering different paths and giving honest information.'),
+          this.buildLessonItem('How to Start Day Trading Easily', 'https://www.youtube.com/watch?v=2R-oMVTNVBM', 'This video explains how someone should start day trading without stressing and spending any money.'),
+          this.buildLessonItem('How to Read Candles and Wicks', 'https://www.youtube.com/watch?v=wt-uAzAntoY', 'Teaching what candles are, what they represent, and how to read and use them.'),
+          this.buildLessonItem('What are PropFirms and Demo Trading?', 'https://youtu.be/jdWH0nym5SQ', 'Breaking down the first taste of trading the markets with Demo accounts and PropFirms.'),
+        ]
+      },
+      {
+        id: 'confluences',
+        title: 'Confluences',
+        items: [
+          this.buildLessonItem('What are Confluences?', 'https://youtu.be/3LnkytDiF_A', 'Explaining what Confluences are and how they are the backbone to day trading.'),
+          this.buildLessonItem('What is Trend? Simplified', 'https://www.youtube.com/watch?v=VUM7ObUF5FA', 'I breakdown a simplified explaination of trend and the small details that make it.'),
+          this.buildLessonItem('What is OTE - Premium and Discount', 'https://youtu.be/CSI73V23fNQ', 'Where to buy? This is what OTE helps with.'),
+          this.buildLessonItem('Hidden Breaks', null, 'The signals that show a move is really starting, not just noise.')
+        ]
+      },
+      {
+        id: 'trade-risk-management',
+        title: 'Trade/Risk Management',
+        items: [
+          this.buildLessonItem('Where the Trade Dies', null, 'Setting stops that respect the setup without killing the edge.'),
+          this.buildLessonItem('R-Multiple Planning', null, 'How I size targets and manage risk for 2–4R trades.'),
+          this.buildLessonItem('Sizing Rules', null, 'Risk sizing that keeps every trade small enough to survive.'),
+          this.buildLessonItem('Improve Every Week', null, 'The checklist I use after every session to clean my process.')
+        ]
+      },
+      {
+        id: 'invisible-barriers',
+        title: 'Invisible barriers',
+        items: [
+          this.buildLessonItem('Mindset Barriers', null, 'The hidden mental blocks that stop good trades from happening.'),
+          this.buildLessonItem('Avoiding Overtrade', null, 'Why waiting is often the strongest edge in your account.'),
+          this.buildLessonItem('Holding the Plan', null, 'How to stick to your rules when the market gets choppy.'),
+          this.buildLessonItem('Clarity in Chaos', null, 'Finding the simplest path when the market feels messy.')
+        ]
+      }
+    ];
+    const bindScroll = (section) => ({
+      ...section,
+      scrollLeft: () => this.scrollSection('left', section.id),
+      scrollRight: () => this.scrollSection('right', section.id)
+    });
+    return {
+      handle: this.props.handle ?? '@SetoTrading',
+      estYear: this.props.estYear ?? '2023',
+      sections: sections.map(bindScroll)
+    };
+  }
+}
+</script>
+</body>
+</html>
