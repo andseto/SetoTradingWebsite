@@ -174,7 +174,7 @@
         </sc-if>
 
         <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
-          <button type="submit" style="display:inline-flex; align-items:center; gap:10px; padding:16px 38px; border-radius:999px; border:none; background:var(--accent); color:#100d0b; font-family:'Hanken Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; box-shadow:0 16px 44px -16px rgba(var(--accent-rgb),0.85);" style-hover="background:var(--accent-soft);">Submit application →</button>
+          <button type="submit" style="display:inline-flex; align-items:center; gap:10px; padding:16px 38px; border-radius:999px; border:none; background:var(--accent); color:#100d0b; font-family:'Hanken Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; box-shadow:0 16px 44px -16px rgba(var(--accent-rgb),0.85); {{ submitStyle }}" style-hover="background:var(--accent-soft);">{{ submitLabel }}</button>
           <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#6b625a;">No spam. Andrew reviews each one personally.</span>
         </div>
       </form>
@@ -202,7 +202,7 @@ class Component extends DCLogic {
     r.style.setProperty('--accent-soft', A.soft);
     r.style.setProperty('--accent-rgb', A.rgb.join(','));
   }
-  state = { sent:false, error:'', firstName:'', markets:[], styles:[] };
+  state = { sent:false, submitting:false, error:'', firstName:'', markets:[], styles:[] };
   componentDidMount() { this.applyAccent(); }
   componentDidUpdate(prev) { if (prev.accent !== this.props.accent) this.applyAccent(); }
 
@@ -213,7 +213,7 @@ class Component extends DCLogic {
     });
   }
 
-  submit(e) {
+  async submit(e) {
     e.preventDefault();
     const f = this._form;
     const val = (n) => (f && f.elements[n] ? String(f.elements[n].value).trim() : '');
@@ -223,8 +223,44 @@ class Component extends DCLogic {
       this.setState({ error: 'Please fill in your first & last name, age, country, and email so I can reach you.' });
       return;
     }
-    this.setState({ sent: true, error: '', firstName: val('firstName') });
-    window.scrollTo(0, 0);
+    this.setState({ submitting: true, error: '' });
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: '323a5a7a-c6bc-483a-a214-5fcabaf29e41',
+          subject: `LPO Mentorship Application — ${val('firstName')} ${val('lastName')}`,
+          from_name: `${val('firstName')} ${val('lastName')}`,
+          replyto: val('email'),
+          firstName: val('firstName'),
+          lastName: val('lastName'),
+          age: val('age'),
+          country: val('country'),
+          experience: val('experience'),
+          markets: this.state.markets.join(', '),
+          marketsOther: val('marketsOther'),
+          styles: this.state.styles.join(', '),
+          stylesOther: val('stylesOther'),
+          why: val('why'),
+          goals: val('goals'),
+          schedule: val('schedule'),
+          notProfitable: val('notProfitable'),
+          phone: val('phone'),
+          email: val('email'),
+          discord: val('discord'),
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        this.setState({ sent: true, submitting: false, firstName: val('firstName') });
+        window.scrollTo(0, 0);
+      } else {
+        this.setState({ submitting: false, error: 'Something went wrong. Please try again or email me directly at setotrading.us@gmail.com.' });
+      }
+    } catch {
+      this.setState({ submitting: false, error: 'Network error. Please check your connection and try again.' });
+    }
   }
 
   chip(key, label) {
@@ -261,7 +297,9 @@ class Component extends DCLogic {
       markets: MARKETS.map(m => this.chip('markets', m)),
       styles: STYLES.map(s => this.chip('styles', s)),
       showMarketsOther: this.state.markets.includes('Other'),
-      showStylesOther: this.state.styles.includes('Other')
+      showStylesOther: this.state.styles.includes('Other'),
+      submitLabel: this.state.submitting ? 'Sending…' : 'Submit application →',
+      submitStyle: this.state.submitting ? 'opacity:0.6; pointer-events:none; cursor:not-allowed;' : ''
     };
   }
 }
