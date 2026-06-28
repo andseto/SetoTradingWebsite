@@ -1,8 +1,5 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/SetoTrading.dc.html" }
-  ],
-  "redirects": [
-    { "source": "/SetoTrading.dc.html", "destination": "/", "permanent": true }
   ]
 }
