@@ -1,10 +1,225 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Seto Trading</title>
-  <script>window.location.replace('/SetoTrading.dc.html');</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
-<body></body>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  :root { --accent: #d49a45; --accent-soft: #e6b15f; --accent-rgb: 212,154,69; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #100d0b; }
+  *, *::before, *::after { box-sizing: border-box; }
+  ::selection { background: var(--accent); color: #100d0b; }
+  .pnl-scroll::-webkit-scrollbar { display: none; }
+</style>
+</helmet>
+
+<dc-import name="SiteBG" style="position:fixed; inset:0; z-index:0; pointer-events:none;" hint-size="100%,100%"></dc-import>
+
+<div style="position:relative; z-index:1; font-family:'Hanken Grotesk',sans-serif; color:#f2ece4; overflow-x:clip;">
+
+  <dc-import name="SiteNav" home="" active="" handle="{{ handle }}" hint-size="100%,68px"></dc-import>
+
+  <!-- ===================== HERO — CINEMATIC ===================== -->
+  <header id="top" style="position:relative; min-height:94vh; display:flex; align-items:center; padding:clamp(40px,7vh,90px) clamp(20px,5vw,56px) 60px;">
+    <div style="width:100%; max-width:1200px; margin:0 auto;">
+      <div style="position:relative; text-align:center; padding:30px 0;">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(180px,34vw,440px); color:rgba(var(--accent-rgb),0.06); letter-spacing:-0.04em; line-height:1;">LPO</span>
+        </div>
+        <div style="position:relative;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:#8a8078; margin-bottom:30px;">Andrew Seto · {{ handle }}</div>
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(44px,9vw,118px); line-height:0.95; letter-spacing:-0.03em; margin:0 auto 28px; max-width:14ch;">The last<br>possible <span style="color:var(--accent);">option.</span></h1>
+          <p style="font-size:clamp(16px,2vw,20px); line-height:1.6; color:#c4bbb1; max-width:34em; margin:0 auto;">A continuation model that waits for the highest-probability entry — the last possible option before price continues — confirmed by multiple confluences. 65–70% win rate, 2–4R targets.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about" style="position:relative; padding:clamp(50px,8vh,110px) clamp(20px,5vw,56px); background:linear-gradient(180deg, rgba(16,13,11,0) 0%, rgba(13,11,9,0.85) 14%, rgba(13,11,9,0.92) 100%);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:20px;">01 — About</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(32px,5vw,64px); align-items:stretch;">
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <image-slot id="seto-portrait" shape="rounded" radius="16" placeholder="Drag a photo of yourself here" style="display:block; width:100%; flex:1 1 auto; min-height:clamp(440px,56vh,620px);"></image-slot>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 13px; border-radius:999px; border:1px solid rgba(242,236,228,0.14); color:#b3aaa1;">Trading 3+ years</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 13px; border-radius:999px; border:1px solid rgba(242,236,228,0.14); color:#b3aaa1;">Self-taught</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:7px 13px; border-radius:999px; border:1px solid rgba(var(--accent-rgb),0.4); color:var(--accent);">LPO creator</span>
+          </div>
+        </div>
+        <div>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(30px,4.5vw,52px); line-height:1.02; letter-spacing:-0.02em; margin:0 0 24px;">Who is Seto Trading?</h2>
+          <p style="font-size:clamp(16px,1.8vw,18.5px); line-height:1.65; color:#c4bbb1; margin:0 0 20px;">I'm not a guru, and I won't pretend to be. I'm a <span style="color:#f2ece4;">normal person with a regular 9-to-5</span> — I trade around my job, in the hours before and after work, just like a lot of you reading this.</p>
+          <p style="font-size:clamp(16px,1.8vw,18.5px); line-height:1.65; color:#c4bbb1; margin:0 0 20px;">Over the last 3 years I got tired of guessing entries and chasing breakouts, so I built the <span style="color:#f2ece4;">LPO — Last Possible Option</span> model: a continuation framework that waits for price to offer its <span style="color:#f2ece4;">highest-probability entry</span>, confirmed by multiple confluences that I teach.</p>
+          <p style="font-size:clamp(16px,1.8vw,18.5px); line-height:1.65; color:#c4bbb1; margin:0 0 30px;">What started as a curiosity has grown into a serious side hobby — <span style="color:#f2ece4;">tens of thousands in profit</span>, earned in just 1–2 hours a day over the last 3 years. No lambos, no hype. Just a repeatable process and the patience to follow it.</p>
+          <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; color:#f2ece4;">Andrew Seto</span>
+            <span style="height:1px; width:36px; background:var(--accent);"></span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; color:#8a8078;">TRADER · CREATOR OF LPO</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:clamp(40px,6vh,72px); border:1px solid rgba(242,236,228,0.1); border-radius:16px; background:rgba(20,16,14,0.6); display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); overflow:hidden;">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="padding:26px 22px; border-right:1px solid rgba(242,236,228,0.06);">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(24px,2.8vw,32px); color:#f2ece4; letter-spacing:-0.01em;">{{ s.v }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#8a8078; margin-top:8px;">{{ s.k }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUOTE BAND ===================== -->
+  <section style="position:relative; padding:clamp(54px,10vh,108px) clamp(16px,4vw,56px); text-align:center; background:rgba(13,11,9,0.5);">
+    <div style="position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.5) 50%, transparent 100%);"></div>
+    <div style="position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.5) 50%, transparent 100%);"></div>
+    <div style="max-width:1280px; margin:0 auto;">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent);">Remember</span>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(15px,4.4vw,56px); line-height:1.1; letter-spacing:-0.02em; margin:20px 0 0; white-space:nowrap;">It isn't easy. But nothing good is<span style="color:var(--accent);">.</span></h2>
+    </div>
+  </section>
+
+  <!-- ===================== LPO MODEL ===================== -->
+  <section id="model" style="position:relative; padding:clamp(40px,7vh,80px) clamp(20px,5vw,56px) clamp(60px,9vh,100px); background:rgba(13,11,9,0.92);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:20px;">02 — The LPO Model</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(28px,4vw,46px); line-height:1.04; letter-spacing:-0.02em; margin:0 0 14px; max-width:18ch;">Three things have to agree before I click.</h2>
+      <p style="font-size:17px; color:#9b9189; margin:0 0 48px; max-width:48ch;">The edge isn't a secret indicator — it's the discipline to wait for all three, every time.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px;">
+        <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
+          <div style="border:1px solid rgba(242,236,228,0.1); border-radius:16px; background:rgba(24,20,18,0.5); padding:30px 28px; display:flex; flex-direction:column; gap:14px;" style-hover="border-color:rgba(var(--accent-rgb),0.4);">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent);">{{ p.n }}</div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0; line-height:1.15;">{{ p.title }}</h3>
+            <p style="font-size:15px; line-height:1.6; color:#a89f96; margin:0;">{{ p.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:48px;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:22px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; margin:0;">Verified Profitability Record</h3>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8a8078; margin-right:4px;">tap to enlarge</span>
+            <button onClick="{{ pnlPrev }}" aria-label="Previous" style="width:40px; height:40px; border-radius:50%; border:1px solid rgba(242,236,228,0.18); background:rgba(16,13,11,0.72); color:#f2ece4; font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="border-color:var(--accent); color:var(--accent);">‹</button>
+            <button onClick="{{ pnlNext }}" aria-label="Next" style="width:40px; height:40px; border-radius:50%; border:1px solid rgba(242,236,228,0.18); background:rgba(16,13,11,0.72); color:#f2ece4; font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="border-color:var(--accent); color:var(--accent);">›</button>
+          </div>
+        </div>
+        <div class="pnl-scroll" ref="{{ pnlScroller }}" style="display:flex; gap:16px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; padding:2px;">
+          <sc-for list="{{ pnl }}" as="x" hint-placeholder-count="3">
+            <div onClick="{{ openZoom }}" style="flex:0 0 calc((100% - 32px)/3); min-width:0; scroll-snap-align:start; position:relative; cursor:zoom-in;">
+              <image-slot id="{{ x.id }}" shape="rounded" radius="12" fit="cover" placeholder="{{ x.label }}" style="display:block; width:100%; height:auto; aspect-ratio:1/1; background:rgba(20,16,14,0.85);"></image-slot>
+              <div style="position:absolute; bottom:10px; right:10px; pointer-events:none; width:30px; height:30px; border-radius:9px; background:rgba(16,13,11,0.72); backdrop-filter:blur(4px); border:1px solid rgba(242,236,228,0.14); display:flex; align-items:center; justify-content:center; color:#f2ece4; font-size:15px; opacity:0.82;">⤢</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" handle="{{ handle }}" estYear="{{ estYear }}" hint-size="100%,420px"></dc-import>
+
+  <sc-if value="{{ zoom }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeZoom }}" style="position:fixed; inset:0; z-index:200; background:rgba(8,6,5,0.93); backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:center; padding:clamp(20px,5vw,72px);">
+      <button onClick="{{ closeZoom }}" aria-label="Close" style="position:absolute; top:24px; right:28px; width:48px; height:48px; border-radius:50%; border:1px solid rgba(242,236,228,0.22); background:rgba(16,13,11,0.65); color:#f2ece4; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="border-color:var(--accent); color:var(--accent);">✕</button>
+      {{ zoomImg }}
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;handle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;@SetoTrading&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;estYear&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2023&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;winRate&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;65–70%&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;amber&quot;,&quot;options&quot;:[&quot;amber&quot;,&quot;azure&quot;,&quot;violet&quot;,&quot;copper&quot;,&quot;slate&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  ACCENTS = {
+    amber:  { hex:'#d49a45', soft:'#e6b15f', rgb:[212,154,69] },
+    azure:  { hex:'#4f86f7', soft:'#74a0fa', rgb:[79,134,247] },
+    violet: { hex:'#9a7cf2', soft:'#b29bf6', rgb:[154,124,242] },
+    copper: { hex:'#c9763e', soft:'#dc9059', rgb:[201,118,62] },
+    slate:  { hex:'#8fb3c9', soft:'#abc6d8', rgb:[143,179,201] }
+  };
+  state = { zoom: null };
+
+  pnlList() {
+    return [
+      { id: 'pnl-month-1', label: 'Month 1' },
+      { id: 'pnl-month-2', label: 'Month 2' },
+      { id: 'pnl-month-3', label: 'Month 3' }
+    ];
+  }
+  pnlStep(dir) {
+    const el = this._scroller;
+    if (!el) return;
+    const step = (el.clientWidth - 32) / 3 + 16;
+    el.scrollBy({ left: dir * step, behavior: 'smooth' });
+  }
+  pnlNext() { this.pnlStep(1); }
+  pnlPrev() { this.pnlStep(-1); }
+
+  accent() { return this.ACCENTS[this.props.accent] || this.ACCENTS.amber; }
+  applyAccent() {
+    const A = this.accent();
+    const r = document.documentElement;
+    r.style.setProperty('--accent', A.hex);
+    r.style.setProperty('--accent-soft', A.soft);
+    r.style.setProperty('--accent-rgb', A.rgb.join(','));
+  }
+  componentDidMount() { this.applyAccent(); this._onKey = (e) => { if (e.key === 'Escape' && this.state.zoom) this.setState({ zoom: null }); }; window.addEventListener('keydown', this._onKey); }
+  componentWillUnmount() { if (this._onKey) window.removeEventListener('keydown', this._onKey); }
+  componentDidUpdate(prev) { if (prev.accent !== this.props.accent) this.applyAccent(); }
+
+  openZoom(e) {
+    const slot = e.currentTarget.querySelector('image-slot');
+    if (!slot || !slot.hasAttribute('data-filled')) return;
+    const img = slot.shadowRoot && slot.shadowRoot.querySelector('.frame img');
+    const src = img && img.getAttribute('src');
+    if (src) this.setState({ zoom: src });
+  }
+
+  renderVals() {
+    const handle = this.props.handle ?? '@SetoTrading';
+    const estYear = this.props.estYear ?? '2023';
+    const winRate = this.props.winRate ?? '65–70%';
+    return {
+      handle, estYear,
+      zoom: this.state.zoom || null,
+      zoomImg: this.state.zoom ? React.createElement('img', {
+        src: this.state.zoom,
+        alt: 'Verified P&L',
+        onClick: (e) => e.stopPropagation(),
+        style: { maxWidth: 'min(960px,94vw)', maxHeight: '88vh', borderRadius: '14px', border: '1px solid rgba(242,236,228,0.14)', boxShadow: '0 40px 120px -28px rgba(0,0,0,0.85)', cursor: 'default' }
+      }) : null,
+      openZoom: (e) => this.openZoom(e),
+      closeZoom: () => this.setState({ zoom: null }),
+      stopProp: (e) => e.stopPropagation(),
+      pillars: [
+        { n:'01', title:'OTE on the Leg', body:'Identify the Optimal Trade Entry on a leg that has already created a clear Higher High or Lower Low — direction is confirmed before anything else.' },
+        { n:'02', title:'Last FVG in Discount', body:'Find the last Fair Value Gap within the discount of that OTE leg, working from the 1–5m timeframe. That gap is the entry — limit order at its exact midpoint.' },
+        { n:'03', title:'SL & TP at Structure', body:'Stop Loss sits at the recent High (shorts) or Low (longs). Take Profit targets the opposing recent High or Low. Clean structure, defined risk, nothing else.' }
+      ],
+      stats: [
+        { v:'$40,000', k:'Profit · 3 yrs · 1–2 hrs a day' },
+        { v: winRate, k:'Win rate' },
+        { v:'2–4R', k:'Target per trade' },
+        { v:'9-5', k:'Day job — I trade around it' }
+      ],
+      pnl: this.pnlList(),
+      pnlScroller: (el) => { this._scroller = el; },
+      pnlPrev: () => this.pnlPrev(),
+      pnlNext: () => this.pnlNext()
+    };
+  }
+}
+</script>
+</body>
 </html>
