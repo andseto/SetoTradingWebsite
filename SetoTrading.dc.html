@@ -205,9 +205,9 @@ class Component extends DCLogic {
       closeZoom: () => this.setState({ zoom: null }),
       stopProp: (e) => e.stopPropagation(),
       pillars: [
-        { n:'01', title:'Higher-Timeframe Bias', body:'Direction first. I only hunt continuations that agree with the higher-timeframe story — so every trade swims with the current, never against it.' },
-        { n:'02', title:'FVG + OTE / Discount', body:'Fair value gaps mark the imbalance; OTE and discount pricing (0.62–0.79) mark where the last possible entry lives. I buy the retrace, not the breakout.' },
-        { n:'03', title:'Risk & R-Multiples', body:'Defined stop, pre-planned targets, 2–4R, fixed risk per trade. The edge is nothing without the discipline to let it play out.' }
+        { n:'01', title:'OTE on the Leg', body:'Identify the Optimal Trade Entry on a leg that has already created a clear Higher High or Lower Low — direction is confirmed before anything else.' },
+        { n:'02', title:'Last FVG in Discount', body:'Find the last Fair Value Gap within the discount of that OTE leg, working from the 1–5m timeframe. That gap is the entry — limit order at its exact midpoint.' },
+        { n:'03', title:'SL & TP at Structure', body:'Stop Loss sits at the recent High (shorts) or Low (longs). Take Profit targets the opposing recent High or Low. Clean structure, defined risk, nothing else.' }
       ],
       stats: [
         { v:'$40,000', k:'Profit · 3 yrs · 1–2 hrs a day' },
